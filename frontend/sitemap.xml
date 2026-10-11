@@ -1,88 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Main Pages -->
   <url>
     <loc>https://get-html.cc.cd/</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/about</loc>
-    <lastmod>2025-07-19</lastmod>
+    <loc>https://get-html.cc.cd/about.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/privacy</loc>
-    <lastmod>2025-07-19</lastmod>
+    <loc>https://get-html.cc.cd/privacy.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/terms</loc>
-    <lastmod>2025-07-19</lastmod>
+    <loc>https://get-html.cc.cd/terms.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
-  <!-- Blog -->
+  <!-- Blog Index -->
   <url>
     <loc>https://get-html.cc.cd/blog/</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- Blog Articles -->
   <url>
-    <loc>https://get-html.cc.cd/blog/how-to-download-a-website-for-offline-use</loc>
-    <lastmod>2025-07-01</lastmod>
+    <loc>https://get-html.cc.cd/blog/how-to-download-a-website-for-offline-use.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/blog/website-archiving-best-practices</loc>
-    <lastmod>2025-07-05</lastmod>
+    <loc>https://get-html.cc.cd/blog/website-archiving-best-practices.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/blog/html-only-vs-full-page-download</loc>
-    <lastmod>2025-07-08</lastmod>
+    <loc>https://get-html.cc.cd/blog/html-only-vs-full-page-download.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/blog/how-to-mirror-a-static-website</loc>
-    <lastmod>2025-07-12</lastmod>
+    <loc>https://get-html.cc.cd/blog/how-to-mirror-a-static-website.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/blog/wget-vs-httrack-vs-online-downloader</loc>
-    <lastmod>2025-07-15</lastmod>
+    <loc>https://get-html.cc.cd/blog/wget-vs-httrack-vs-online-downloader.html</loc>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://get-html.cc.cd/blog/best-html-downloader-for-webpages.html</loc>
-    <lastmod>2025-07-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://get-html.cc.cd/blog/how-to-download-website-from-link.html</loc>
-    <lastmod>2025-07-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

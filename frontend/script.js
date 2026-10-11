@@ -358,25 +358,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof gsap === 'undefined') return;
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        // Entrance timeline
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
-
-        tl.from('header', { y: -20, opacity: 0, duration: 0.6 })
-          .from('.hero h1', { y: 24, opacity: 0, duration: 0.7 }, '-=0.3')
-          .from('.hero p', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4')
-          .from('#drop-zone', { y: 18, opacity: 0, scale: 0.98, duration: 0.6 }, '-=0.4')
-          .from('.modes-section h2', { opacity: 0, y: 12, duration: 0.5 }, '-=0.3')
-          .from('.mode-card', { y: 20, opacity: 0, stagger: 0.08, duration: 0.6 }, '-=0.3')
-          .from('.action-section', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4');
-
         // Interactive tactile card micro-physics
         const cards = document.querySelectorAll('.mode-card');
         cards.forEach(card => {
             card.addEventListener('mouseenter', () => {
-                gsap.to(card, { y: -5, duration: 0.25, ease: 'power2.out' });
+                gsap.to(card, { y: -4, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
             });
             card.addEventListener('mouseleave', () => {
-                gsap.to(card, { y: 0, duration: 0.3, ease: 'power2.out' });
+                gsap.to(card, { y: 0, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
+            });
+            card.addEventListener('click', () => {
+                gsap.fromTo(card, { scale: 0.98 }, { scale: 1, duration: 0.3, ease: 'back.out(2)', overwrite: 'auto' });
             });
         });
 
@@ -398,11 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize GSAP animations after DOM is ready
-    if (document.readyState === 'complete') {
-        initGSAPAnimations();
-    } else {
-        window.addEventListener('load', initGSAPAnimations);
-    }
+    // Initialize GSAP micro-interactions safely
+    initGSAPAnimations();
 });
 
