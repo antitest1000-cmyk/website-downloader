@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Main Pages -->
@@ -11,21 +10,21 @@
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/about.html</loc>
+    <loc>https://get-html.cc.cd/about</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/privacy.html</loc>
+    <loc>https://get-html.cc.cd/privacy</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://get-html.cc.cd/terms.html</loc>
+    <loc>https://get-html.cc.cd/terms</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
