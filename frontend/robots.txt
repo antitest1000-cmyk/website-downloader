@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://html-get.netlify.app/sitemap.xml
+Sitemap: https://get-html.cc.cd/sitemap.xml

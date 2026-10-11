@@ -3,28 +3,28 @@
 
   <!-- Main Pages -->
   <url>
-    <loc>https://html-get.netlify.app/</loc>
+    <loc>https://get-html.cc.cd/</loc>
     <lastmod>2025-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/about</loc>
+    <loc>https://get-html.cc.cd/about</loc>
     <lastmod>2025-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/privacy</loc>
+    <loc>https://get-html.cc.cd/privacy</loc>
     <lastmod>2025-07-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/terms</loc>
+    <loc>https://get-html.cc.cd/terms</loc>
     <lastmod>2025-07-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -32,56 +32,56 @@
 
   <!-- Blog -->
   <url>
-    <loc>https://html-get.netlify.app/blog/</loc>
+    <loc>https://get-html.cc.cd/blog/</loc>
     <lastmod>2025-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/how-to-download-a-website-for-offline-use</loc>
+    <loc>https://get-html.cc.cd/blog/how-to-download-a-website-for-offline-use</loc>
     <lastmod>2025-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/website-archiving-best-practices</loc>
+    <loc>https://get-html.cc.cd/blog/website-archiving-best-practices</loc>
     <lastmod>2025-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/html-only-vs-full-page-download</loc>
+    <loc>https://get-html.cc.cd/blog/html-only-vs-full-page-download</loc>
     <lastmod>2025-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/how-to-mirror-a-static-website</loc>
+    <loc>https://get-html.cc.cd/blog/how-to-mirror-a-static-website</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/wget-vs-httrack-vs-online-downloader</loc>
+    <loc>https://get-html.cc.cd/blog/wget-vs-httrack-vs-online-downloader</loc>
     <lastmod>2025-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/best-html-downloader-for-webpages.html</loc>
+    <loc>https://get-html.cc.cd/blog/best-html-downloader-for-webpages.html</loc>
     <lastmod>2025-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://html-get.netlify.app/blog/how-to-download-website-from-link.html</loc>
+    <loc>https://get-html.cc.cd/blog/how-to-download-website-from-link.html</loc>
     <lastmod>2025-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
