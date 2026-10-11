@@ -1,14 +1,17 @@
-// Set this to your production backend URL!
+// Production backend URL
 let API_BASE_URL = 'http://localhost:3000';
-
-// Automatically switch to production URL if not running locally
 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    // ⚠️ REPLACE THIS STRING with your deployed backend URL (e.g., Render, Railway, Heroku)
-    API_BASE_URL = 'https://website-download.onrender.com'; 
+    API_BASE_URL = 'https://website-download.onrender.com';
 }
 
+// ─── SVG Icons ───────────────────────────────────────────────────────────────
+const SUN_SVG = '<svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
+const MOON_SVG = '<svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+const COPY_SVG = '<svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+const CHECK_SVG = '<svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
 // ─── Backend Status ──────────────────────────────────────────────────────────
-let backendStatus = 'checking'; // 'checking' | 'sleeping' | 'awake'
+let backendStatus = 'checking';
 let wakeupInterval = null;
 let wakeupSeconds = 0;
 
@@ -19,19 +22,22 @@ const wakeupTimerEl   = document.getElementById('wakeup-timer');
 
 function setBackendStatus(state, label) {
     backendStatus = state;
-    statusBar.className = `backend-status ${state}`;
-    if (label) {
-        statusLabel.textContent = label;
-    } else if (state === 'awake') {
-        statusLabel.textContent = 'Server Ready';
-    } else if (state === 'sleeping') {
-        statusLabel.textContent = 'Server Sleeping 💤';
-    } else {
-        statusLabel.textContent = 'Checking server...';
+    if (statusBar) statusBar.className = `backend-status ${state}`;
+    if (statusLabel) {
+        if (label) {
+            statusLabel.textContent = label;
+        } else if (state === 'awake') {
+            statusLabel.textContent = 'Server Ready';
+        } else if (state === 'sleeping') {
+            statusLabel.textContent = 'Server Sleeping 💤';
+        } else {
+            statusLabel.textContent = 'Checking server...';
+        }
     }
 }
 
 async function pingBackend() {
+    if (!statusBar) return;
     setBackendStatus('checking');
     const controller = new AbortController();
     const timeoutId  = setTimeout(() => controller.abort(), 6000);
@@ -40,7 +46,6 @@ async function pingBackend() {
         await fetch(`${API_BASE_URL}/`, { signal: controller.signal });
         clearTimeout(timeoutId);
         const elapsed = Date.now() - t0;
-        // Fast response → already awake; slow/timed-out → was sleeping
         setBackendStatus(elapsed < 4000 ? 'awake' : 'sleeping');
     } catch {
         clearTimeout(timeoutId);
@@ -49,6 +54,7 @@ async function pingBackend() {
 }
 
 function startWakeupTimer() {
+    if (!wakeupContainer || !wakeupTimerEl) return;
     wakeupSeconds = 0;
     wakeupTimerEl.textContent = '0s';
     wakeupContainer.classList.remove('hidden');
@@ -59,13 +65,16 @@ function startWakeupTimer() {
 }
 
 function stopWakeupTimer() {
-    clearInterval(wakeupInterval);
-    wakeupInterval = null;
-    wakeupContainer.classList.add('hidden');
+    if (wakeupInterval) {
+        clearInterval(wakeupInterval);
+        wakeupInterval = null;
+    }
+    if (wakeupContainer) wakeupContainer.classList.add('hidden');
 }
 
-// Ping on load — non-blocking, updates the indicator quietly in the background
-pingBackend();
+if (statusBar) {
+    pingBackend();
+}
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -74,58 +83,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
 
-    if (localStorage.getItem('theme') === 'light') {
-        body.classList.remove('dark-mode');
-        body.classList.add('light-mode');
-        themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-    }
-
-    themeToggleBtn.addEventListener('click', () => {
-        if (body.classList.contains('light-mode')) {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-        } else {
+    if (themeToggleBtn) {
+        if (localStorage.getItem('theme') === 'light') {
             body.classList.remove('dark-mode');
             body.classList.add('light-mode');
-            localStorage.setItem('theme', 'light');
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            themeToggleBtn.innerHTML = MOON_SVG;
+        } else {
+            themeToggleBtn.innerHTML = SUN_SVG;
         }
-    });
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = SUN_SVG;
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = MOON_SVG;
+            }
+        });
+    }
 
     // ── Mode Selection ────────────────────────────────────────────────────────
     const modeCards = document.querySelectorAll('.mode-card');
     let currentMode = 'inlined';
 
-    modeCards.forEach(card => {
-        card.addEventListener('click', () => {
-            modeCards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            currentMode = card.getAttribute('data-mode');
-        });
+    if (modeCards.length > 0) {
+        modeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modeCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                currentMode = card.getAttribute('data-mode');
+            });
 
-        card.setAttribute('tabindex', '0');
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                card.click();
-            }
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
         });
-    });
+    }
 
     // ── Paste Button ──────────────────────────────────────────────────────────
     const pasteBtn = document.getElementById('paste-btn');
     const urlInput = document.getElementById('url-input');
 
-    pasteBtn.addEventListener('click', async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            urlInput.value = text;
-        } catch (err) {
-            console.error('Failed to read clipboard contents: ', err);
-        }
-    });
+    if (pasteBtn && urlInput) {
+        pasteBtn.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                urlInput.value = text;
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+            }
+        });
+    }
 
     // ── Download Button ───────────────────────────────────────────────────────
     const downloadBtn       = document.getElementById('download-btn');
@@ -143,129 +160,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    downloadBtn.addEventListener('click', async () => {
-        const url = urlInput.value.trim();
+    if (downloadBtn && urlInput) {
+        downloadBtn.addEventListener('click', async () => {
+            const url = urlInput.value.trim();
 
-        if (!url || !isValidUrl(url)) {
-            urlError.style.display = 'block';
-            return;
-        }
-        urlError.style.display = 'none';
+            if (!url || !isValidUrl(url)) {
+                if (urlError) urlError.style.display = 'block';
+                return;
+            }
+            if (urlError) urlError.style.display = 'none';
 
-        downloadBtn.disabled = true;
+            downloadBtn.disabled = true;
 
-        // Decide UI based on whether backend was sleeping
-        const wasSleeping = backendStatus === 'sleeping';
-        if (wasSleeping) {
-            // Show the wakeup panel with live timer
-            startWakeupTimer();
-            setBackendStatus('checking', 'Waking up... ☕');
-        } else {
-            // Server already awake — go straight to download progress
-            progressContainer.classList.remove('hidden');
-            statusText.innerText = 'Downloading and Compressing...';
-            statusText.style.color = '';
-            progressFill.classList.add('loading');
-        }
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/download`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url, mode: currentMode })
-            });
-
-            // Backend responded — transition from wakeup to download progress
+            const wasSleeping = backendStatus === 'sleeping';
             if (wasSleeping) {
-                stopWakeupTimer();
-                setBackendStatus('awake');
+                startWakeupTimer();
+                setBackendStatus('checking', 'Waking up... ☕');
+            } else if (progressContainer && statusText && progressFill) {
                 progressContainer.classList.remove('hidden');
                 statusText.innerText = 'Downloading and Compressing...';
                 statusText.style.color = '';
                 progressFill.classList.add('loading');
             }
 
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || `Server responded with ${response.status}`);
-            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/download`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, mode: currentMode })
+                });
 
-            // Extract filename from Content-Disposition header
-            let filename = `download-${Date.now()}.zip`;
-            const disposition = response.headers.get('content-disposition');
-            if (disposition && disposition.indexOf('attachment') !== -1) {
-                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-                const matches = filenameRegex.exec(disposition);
-                if (matches != null && matches[1]) {
-                    filename = matches[1].replace(/['"]/g, '');
+                if (wasSleeping) {
+                    stopWakeupTimer();
+                    setBackendStatus('awake');
+                    if (progressContainer && statusText && progressFill) {
+                        progressContainer.classList.remove('hidden');
+                        statusText.innerText = 'Downloading and Compressing...';
+                        statusText.style.color = '';
+                        progressFill.classList.add('loading');
+                    }
                 }
-            }
 
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = downloadUrl;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-
-            setTimeout(() => {
-                a.remove();
-                window.URL.revokeObjectURL(downloadUrl);
-            }, 15000);
-
-            addToHistory(url, currentMode);
-            statusText.innerText = 'Ready!';
-            statusText.style.color = '';
-            setBackendStatus('awake');
-
-        } catch (error) {
-            console.error('Download error:', error);
-            stopWakeupTimer();
-            progressContainer.classList.remove('hidden');
-            statusText.innerText = `Error: ${error.message}`;
-            statusText.style.color = 'var(--color-error)';
-            setBackendStatus('sleeping');
-        } finally {
-            downloadBtn.disabled = false;
-            progressFill.classList.remove('loading');
-            progressFill.style.width = '100%';
-
-            setTimeout(() => {
-                if (statusText.innerText === 'Ready!') {
-                    progressContainer.classList.add('hidden');
-                    progressFill.style.width = '0%';
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server responded with ${response.status}`);
                 }
-            }, 3000);
-        }
-    });
+
+                let filename = `download-${Date.now()}.zip`;
+                const disposition = response.headers.get('content-disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
+                }
+
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = downloadUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+
+                setTimeout(() => {
+                    a.remove();
+                    window.URL.revokeObjectURL(downloadUrl);
+                }, 15000);
+
+                addToHistory(url, currentMode);
+                if (statusText) {
+                    statusText.innerText = 'Ready!';
+                    statusText.style.color = '';
+                }
+                setBackendStatus('awake');
+
+            } catch (error) {
+                console.error('Download error:', error);
+                stopWakeupTimer();
+                if (progressContainer && statusText) {
+                    progressContainer.classList.remove('hidden');
+                    statusText.innerText = `Error: ${error.message}`;
+                    statusText.style.color = 'var(--color-error)';
+                }
+                setBackendStatus('sleeping');
+            } finally {
+                downloadBtn.disabled = false;
+                if (progressFill) {
+                    progressFill.classList.remove('loading');
+                    progressFill.style.width = '100%';
+                }
+
+                setTimeout(() => {
+                    if (statusText && statusText.innerText === 'Ready!' && progressContainer && progressFill) {
+                        progressContainer.classList.add('hidden');
+                        progressFill.style.width = '0%';
+                    }
+                }, 3000);
+            }
+        });
+    }
 
     // ── Drag and Drop ─────────────────────────────────────────────────────────
     const dropZone = document.getElementById('drop-zone');
+    if (dropZone && urlInput) {
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--color-primary)';
+        });
 
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = 'var(--color-primary)';
-    });
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+        });
 
-    dropZone.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = 'var(--border-color)';
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = 'var(--border-color)';
-        const text = e.dataTransfer.getData('text');
-        if (text) urlInput.value = text;
-    });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+            const text = e.dataTransfer.getData('text');
+            if (text) urlInput.value = text;
+        });
+    }
 
     // ── Keyboard Shortcut: Ctrl/Cmd + Enter ───────────────────────────────────
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            if (!downloadBtn.disabled) downloadBtn.click();
+            if (downloadBtn && !downloadBtn.disabled) downloadBtn.click();
         }
     });
 
@@ -275,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let sessionHistory = [];
 
     function renderHistory() {
+        if (!historyList) return;
         historyList.innerHTML = '';
         if (sessionHistory.length === 0) {
             historyList.innerHTML = '<li class="empty-history">No recent downloads in this session.</li>';
@@ -299,12 +323,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const copyBtn = document.createElement('button');
             copyBtn.className = 'copy-btn';
             copyBtn.title = 'Copy Original URL';
-            copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+            copyBtn.innerHTML = COPY_SVG;
             copyBtn.addEventListener('click', () => {
                 navigator.clipboard.writeText(item.url);
-                copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                copyBtn.innerHTML = CHECK_SVG;
                 setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+                    copyBtn.innerHTML = COPY_SVG;
                 }, 2000);
             });
 
@@ -322,8 +346,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderHistory();
     }
 
-    clearHistoryBtn.addEventListener('click', () => {
-        sessionHistory = [];
-        renderHistory();
-    });
+    if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener('click', () => {
+            sessionHistory = [];
+            renderHistory();
+        });
+    }
 });

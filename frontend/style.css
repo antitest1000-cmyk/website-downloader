@@ -19,14 +19,21 @@
     --transition: all 0.3s ease;
 }
 
-/* Ensure font icons and webfonts never block text rendering */
-@font-face {
-    font-family: 'Font Awesome 6 Free';
-    font-display: swap;
+/* SVG Icon styles */
+.svg-icon {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
-@font-face {
-    font-family: 'Font Awesome 6 Brands';
-    font-display: swap;
+.logo .svg-icon {
+    color: var(--color-primary);
+}
+.mode-icon .svg-icon {
+    color: var(--color-primary);
+}
+.input-icon.svg-icon {
+    color: var(--text-secondary);
+    margin-right: 0.75rem;
 }
 
 body.light-mode {
@@ -89,6 +96,7 @@ header {
     gap: 0.75rem;
     font-size: 1.25rem;
     font-weight: 700;
+    min-height: 32px;
 }
 
 .logo i {
@@ -386,6 +394,7 @@ body.light-mode h1 {
     padding: 0.5rem 1rem;
     box-shadow: var(--glass-shadow);
     transition: var(--transition);
+    min-height: 52px;
 }
 
 .input-group:focus-within {
@@ -473,6 +482,9 @@ input[type="url"]::placeholder {
     font-size: 2rem;
     color: var(--color-primary);
     margin-bottom: 1rem;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
 }
 
 .mode-card h3 {
@@ -517,6 +529,7 @@ input[type="url"]::placeholder {
 .backend-status {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.6rem;
     padding: 0.35rem 1rem;
     border-radius: 2rem;
@@ -527,6 +540,8 @@ input[type="url"]::placeholder {
     transition: all 0.4s ease;
     cursor: default;
     user-select: none;
+    min-height: 28px;
+    min-width: 150px;
 }
 
 .backend-status.sleeping {
