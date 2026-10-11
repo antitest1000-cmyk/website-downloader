@@ -19,6 +19,16 @@
     --transition: all 0.3s ease;
 }
 
+/* Ensure font icons and webfonts never block text rendering */
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-display: swap;
+}
+
 body.light-mode {
     --bg-main: #ffffff;
     --bg-card: #fafafa;
@@ -43,7 +53,7 @@ html, body {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     min-height: 100vh;
