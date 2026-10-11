@@ -352,4 +352,57 @@ document.addEventListener('DOMContentLoaded', () => {
             renderHistory();
         });
     }
+
+    // ─── GSAP Motion & Micro-Physics ──────────────────────────────────────────
+    function initGSAPAnimations() {
+        if (typeof gsap === 'undefined') return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        // Entrance timeline
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
+
+        tl.from('header', { y: -20, opacity: 0, duration: 0.6 })
+          .from('.hero h1', { y: 24, opacity: 0, duration: 0.7 }, '-=0.3')
+          .from('.hero p', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4')
+          .from('#drop-zone', { y: 18, opacity: 0, scale: 0.98, duration: 0.6 }, '-=0.4')
+          .from('.modes-section h2', { opacity: 0, y: 12, duration: 0.5 }, '-=0.3')
+          .from('.mode-card', { y: 20, opacity: 0, stagger: 0.08, duration: 0.6 }, '-=0.3')
+          .from('.action-section', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4');
+
+        // Interactive tactile card micro-physics
+        const cards = document.querySelectorAll('.mode-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { y: -5, duration: 0.25, ease: 'power2.out' });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { y: 0, duration: 0.3, ease: 'power2.out' });
+            });
+        });
+
+        // Interactive paste button bounce
+        if (pasteBtn) {
+            pasteBtn.addEventListener('click', () => {
+                gsap.fromTo(pasteBtn, { scale: 0.8 }, { scale: 1, duration: 0.35, ease: 'back.out(2.5)' });
+            });
+        }
+
+        // Tactile download button feedback
+        if (downloadBtn) {
+            downloadBtn.addEventListener('mousedown', () => {
+                gsap.to(downloadBtn, { scale: 0.97, duration: 0.1 });
+            });
+            downloadBtn.addEventListener('mouseup', () => {
+                gsap.to(downloadBtn, { scale: 1, duration: 0.2, ease: 'back.out(2)' });
+            });
+        }
+    }
+
+    // Initialize GSAP animations after DOM is ready
+    if (document.readyState === 'complete') {
+        initGSAPAnimations();
+    } else {
+        window.addEventListener('load', initGSAPAnimations);
+    }
 });
+

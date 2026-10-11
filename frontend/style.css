@@ -1,22 +1,24 @@
 :root {
-    /* Dark Mode (Default) - Vercel/Stripe Minimal Aesthetic */
-    --bg-main: #000000;
-    --bg-card: #0a0a0a;
-    --bg-input: #111111;
-    --border-color: #333333;
+    /* Dark Mode (Default) - Linear / Vercel High-End Aesthetic */
+    --bg-main: #060608;
+    --bg-card: #0d0d10;
+    --bg-card-hover: #131317;
+    --bg-input: #101014;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color-hover: rgba(255, 255, 255, 0.18);
     --text-primary: #ededed;
     --text-secondary: #a1a1aa;
     
     --color-primary: #0070f3;
-    --color-primary-hover: #3291ff;
-    --color-success: #17c964;
-    --color-error: #e00;
-    --color-warning: #f5a623;
+    --color-primary-hover: #1a82f7;
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
     
-    --glass-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.39);
-    --glass-backdrop: blur(0px); /* Removed heavy blur for crispness */
+    --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --glass-backdrop: blur(12px);
     
-    --transition: all 0.3s ease;
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* SVG Icon styles */
@@ -62,13 +64,41 @@ html, body {
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     background-color: var(--bg-main);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
     color: var(--text-primary);
     min-height: 100vh;
     position: relative;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Background Shapes Removed for Minimalism */
+body::before {
+    content: '';
+    position: fixed;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 480px;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 112, 243, 0.09) 0%, rgba(0, 112, 243, 0) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.light-mode {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+body.light-mode::before {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 112, 243, 0.05) 0%, rgba(0, 112, 243, 0) 100%);
+}
+
+.app-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Background Shapes Removed */
 .bg-shape {
     display: none;
 }
@@ -373,16 +403,29 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+.hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 body.light-mode h1 {
-    background: linear-gradient(to right, #0f172a, var(--color-primary));
+    background: linear-gradient(180deg, #09090b 0%, #3f3f46 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero p {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--text-secondary);
-    margin-bottom: 2rem;
+    max-width: 52ch;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
 }
 
 .input-group {
@@ -390,16 +433,17 @@ body.light-mode h1 {
     align-items: center;
     background: var(--bg-input);
     border: 1px solid var(--border-color);
-    border-radius: 8px; /* Sharper Vercel style */
-    padding: 0.5rem 1rem;
-    box-shadow: var(--glass-shadow);
+    border-radius: 12px;
+    padding: 0.4rem 0.6rem 0.4rem 1.25rem;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: var(--transition);
-    min-height: 52px;
+    min-height: 56px;
+    position: relative;
 }
 
 .input-group:focus-within {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.25), 0 8px 28px -4px rgba(0, 112, 243, 0.25);
 }
 
 .input-icon {
@@ -449,23 +493,25 @@ input[type="url"]::placeholder {
 .mode-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.5rem;
+    border-radius: 12px;
+    padding: 1.6rem;
     cursor: pointer;
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .mode-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .mode-card.active {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px var(--color-primary);
-    background: rgba(59, 130, 246, 0.1);
+    background: linear-gradient(180deg, rgba(0, 112, 243, 0.09) 0%, var(--bg-card) 100%);
+    box-shadow: 0 0 0 1px var(--color-primary), 0 12px 30px -4px rgba(0, 112, 243, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .mode-card.active::before {
@@ -473,7 +519,7 @@ input[type="url"]::placeholder {
     position: absolute;
     top: 0;
     left: 0;
-    width: 4px;
+    width: 3px;
     height: 100%;
     background: var(--color-primary);
 }
@@ -678,24 +724,29 @@ input[type="url"]::placeholder {
 
 
 .primary-btn {
-    background: var(--color-primary);
+    background: linear-gradient(180deg, #0070f3 0%, #0056bd 100%);
     color: white;
-    border: none;
-    border-radius: 2rem;
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+    padding: 0.9rem 2.75rem;
+    font-size: 1.05rem;
     font-weight: 600;
+    letter-spacing: -0.01em;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
     transition: var(--transition);
-    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 18px 0 rgba(0, 112, 243, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .primary-btn:hover {
-    background: var(--color-primary-hover);
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px 0 rgba(0, 112, 243, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.primary-btn:active {
+    transform: scale(0.98);
 }
 
 .primary-btn:disabled {
